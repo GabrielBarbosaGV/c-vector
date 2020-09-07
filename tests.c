@@ -25,15 +25,48 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "minunit.h"
 #include "vector.h"
 
-MU_TEST(is_instantiable) {
+MU_TEST(vector_is_instantiable) {
 	// Test is a failure if it won't compile
-	Vector* vector = malloc(sizeof(Vector));
-	free(vector);
+	Vector* vector = create_basic_vector();
+	delete_basic_vector(vector);
 	mu_check(1);
 }
 
+MU_TEST(vector_has_size) {
+	// Test is a failure if it won't compile
+	Vector* vector = create_basic_vector();
+	size_t size_of_vector = vector -> size;
+	delete_basic_vector(vector);
+	mu_check(1);
+}
+
+MU_TEST(create_basic_vector_function_exists) {
+	// Test is a failure if it won't compile
+	Vector* vector = create_basic_vector();
+	delete_basic_vector(vector);
+	mu_check(1);
+}
+
+MU_TEST(delete_basic_vector_function_exists) {
+	// Test is a failure if it won't compile
+	Vector* vector = create_basic_vector();
+	delete_basic_vector(vector);
+	mu_check(1);
+}
+
+MU_TEST(basic_vector_starts_with_size_zero) {
+	Vector* vector = create_basic_vector();
+	size_t vector_size = vector -> size;
+	delete_basic_vector(vector);
+	mu_assert(vector_size == 0, "Initial basic vector size is non-zero");
+}
+
 MU_TEST_SUITE(test_suite) {
-	MU_RUN_TEST(is_instantiable);
+	MU_RUN_TEST(vector_is_instantiable);
+	MU_RUN_TEST(vector_has_size);
+	MU_RUN_TEST(create_basic_vector_function_exists);
+	MU_RUN_TEST(delete_basic_vector_function_exists);
+	MU_RUN_TEST(basic_vector_starts_with_size_zero);
 }
 
 int main(void) {
