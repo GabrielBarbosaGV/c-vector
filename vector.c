@@ -25,8 +25,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <stdio.h>
 #include "vector.h"
 
+void add_to_basic_vector(Vector* vector, void* address_of_element_to_add) {
+	
+}
+
 Vector* create_basic_vector() {
 	Vector* vector = malloc(sizeof(Vector));
+	vector -> add = add_to_basic_vector;
 	vector -> size = 0;
 	return vector;
 }

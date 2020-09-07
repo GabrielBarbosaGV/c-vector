@@ -61,12 +61,24 @@ MU_TEST(basic_vector_starts_with_size_zero) {
 	mu_assert(vector_size == 0, "Initial basic vector size is non-zero");
 }
 
+MU_TEST(can_add_one_element_to_vector) {
+	// Test is a failure if it won't compile
+	Vector* vector = create_basic_vector();
+	int* pointer_to_int = malloc(sizeof(int));
+
+	vector -> add(vector, pointer_to_int);
+
+	delete_basic_vector(vector);
+	mu_check(1);
+}
+
 MU_TEST_SUITE(test_suite) {
 	MU_RUN_TEST(vector_is_instantiable);
 	MU_RUN_TEST(vector_has_size);
 	MU_RUN_TEST(create_basic_vector_function_exists);
 	MU_RUN_TEST(delete_basic_vector_function_exists);
 	MU_RUN_TEST(basic_vector_starts_with_size_zero);
+	MU_RUN_TEST(can_add_one_element_to_vector);
 }
 
 int main(void) {
