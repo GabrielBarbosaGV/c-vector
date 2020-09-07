@@ -32,4 +32,8 @@ struct Vector {
 	size_t size;
 };
 
+Vector* create_basic_vector();
+
+void delete_basic_vector(Vector* vector);
+
 #endif
