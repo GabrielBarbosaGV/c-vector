@@ -21,9 +21,23 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+#include <stdlib.h>
 #include "minunit.h"
 #include "vector.h"
 
+MU_TEST(is_instantiable) {
+	// Test is a failure if it won't compile
+	Vector* vector = malloc(sizeof(Vector));
+	free(vector);
+	mu_check(1);
+}
+
+MU_TEST_SUITE(test_suite) {
+	MU_RUN_TEST(is_instantiable);
+}
+
 int main(void) {
-	return 0;
+	MU_RUN_SUITE(test_suite);
+	MU_REPORT();
+	return MU_EXIT_CODE;
 }
