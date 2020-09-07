@@ -94,6 +94,8 @@ MU_TEST(can_get_one_element_from_vector) {
 
 	int* pointer_to_returned_int = vector -> get(vector, 0);
 
+	free(pointer_to_int);
+
 	mu_assert(
 		(*pointer_to_int) == (*pointer_to_returned_int),
 		"Value of returned int different from given"
