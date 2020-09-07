@@ -86,6 +86,20 @@ MU_TEST(can_add_one_element_to_vector) {
 	mu_check(1);
 }
 
+MU_TEST(can_get_one_element_from_vector) {
+	Vector* vector = create_basic_vector();
+	int* pointer_to_int = malloc(sizeof(int));
+	
+	vector -> add(vector, pointer_to_int);
+
+	int* pointer_to_returned_int = vector -> get(vector, 0);
+
+	mu_assert(
+		(*pointer_to_int) == (*pointer_to_returned_int),
+		"Value of returned int different from given"
+	);
+}
+
 MU_TEST_SUITE(test_suite) {
 	MU_RUN_TEST(vector_is_instantiable);
 	MU_RUN_TEST(vector_has_size);
@@ -93,6 +107,7 @@ MU_TEST_SUITE(test_suite) {
 	MU_RUN_TEST(destroy_basic_vector_function_exists);
 	MU_RUN_TEST(basic_vector_starts_with_size_zero);
 	MU_RUN_TEST(can_add_one_element_to_vector);
+	MU_RUN_TEST(can_get_one_element_from_vector);
 }
 
 int main(void) {
