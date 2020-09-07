@@ -24,10 +24,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef SIMPLE_VECTOR_H
 #define SIMPLE_VECTOR_H
 
+#include <stdlib.h>
+
 typedef struct Vector Vector;
 
 struct Vector {
-	
+	size_t size;
 };
 
 #endif

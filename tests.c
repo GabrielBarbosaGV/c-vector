@@ -25,15 +25,24 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "minunit.h"
 #include "vector.h"
 
-MU_TEST(is_instantiable) {
+MU_TEST(vector_is_instantiable) {
 	// Test is a failure if it won't compile
 	Vector* vector = malloc(sizeof(Vector));
 	free(vector);
 	mu_check(1);
 }
 
+MU_TEST(vector_has_size) {
+	// Test is a failure if it won't compile
+	Vector* vector = malloc(sizeof(Vector));
+	size_t size_of_vector = vector -> size;
+	free(vector);
+	mu_check(1);
+}
+
 MU_TEST_SUITE(test_suite) {
-	MU_RUN_TEST(is_instantiable);
+	MU_RUN_TEST(vector_is_instantiable);
+	MU_RUN_TEST(vector_has_size);
 }
 
 int main(void) {
