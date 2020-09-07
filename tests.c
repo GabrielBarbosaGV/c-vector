@@ -28,36 +28,48 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 MU_TEST(vector_is_instantiable) {
 	// Test is a failure if it won't compile
 	Vector* vector = create_basic_vector();
-	delete_basic_vector(vector);
+
+	vector -> destroy(vector);
+
 	mu_check(1);
 }
 
 MU_TEST(vector_has_size) {
 	// Test is a failure if it won't compile
 	Vector* vector = create_basic_vector();
+
 	size_t size_of_vector = vector -> size;
-	delete_basic_vector(vector);
+
+	vector -> destroy(vector);
+
 	mu_check(1);
 }
 
 MU_TEST(create_basic_vector_function_exists) {
 	// Test is a failure if it won't compile
 	Vector* vector = create_basic_vector();
-	delete_basic_vector(vector);
+
+	vector -> destroy(vector);
+
 	mu_check(1);
 }
 
-MU_TEST(delete_basic_vector_function_exists) {
+MU_TEST(destroy_basic_vector_function_exists) {
 	// Test is a failure if it won't compile
 	Vector* vector = create_basic_vector();
-	delete_basic_vector(vector);
+
+	vector -> destroy(vector);
+
 	mu_check(1);
 }
 
 MU_TEST(basic_vector_starts_with_size_zero) {
 	Vector* vector = create_basic_vector();
+
 	size_t vector_size = vector -> size;
-	delete_basic_vector(vector);
+
+	vector -> destroy(vector);
+
 	mu_assert(vector_size == 0, "Initial basic vector size is non-zero");
 }
 
@@ -68,7 +80,9 @@ MU_TEST(can_add_one_element_to_vector) {
 
 	vector -> add(vector, pointer_to_int);
 
-	delete_basic_vector(vector);
+	vector -> destroy(vector);
+	free(pointer_to_int);
+
 	mu_check(1);
 }
 
@@ -76,7 +90,7 @@ MU_TEST_SUITE(test_suite) {
 	MU_RUN_TEST(vector_is_instantiable);
 	MU_RUN_TEST(vector_has_size);
 	MU_RUN_TEST(create_basic_vector_function_exists);
-	MU_RUN_TEST(delete_basic_vector_function_exists);
+	MU_RUN_TEST(destroy_basic_vector_function_exists);
 	MU_RUN_TEST(basic_vector_starts_with_size_zero);
 	MU_RUN_TEST(can_add_one_element_to_vector);
 }

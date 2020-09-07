@@ -31,6 +31,7 @@ typedef struct Vector Vector;
 struct Vector {
 	size_t size;
 	void (*add)(Vector* vector, void* address_of_element_to_add);
+	void (*destroy)(Vector* vector);
 };
 
 Vector* create_basic_vector();

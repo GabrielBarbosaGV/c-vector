@@ -29,10 +29,17 @@ void add_to_basic_vector(Vector* vector, void* address_of_element_to_add) {
 	
 }
 
+void destroy_basic_vector(Vector* vector) {
+	free(vector);
+}
+
 Vector* create_basic_vector() {
 	Vector* vector = malloc(sizeof(Vector));
-	vector -> add = add_to_basic_vector;
+
 	vector -> size = 0;
+	vector -> add = add_to_basic_vector;
+	vector -> destroy = destroy_basic_vector;
+
 	return vector;
 }
 
