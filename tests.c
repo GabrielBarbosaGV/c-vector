@@ -125,6 +125,37 @@ MU_TEST(size_grows_to_one) {
 	);
 }
 
+MU_TEST(can_get_more_than_one_element) {
+	Vector* vector = vector_create();
+
+	int* first_element = malloc(sizeof(int));
+	int* second_element = malloc(sizeof(int));
+
+	*first_element = 10;
+	*second_element = 20;
+
+	vector_add(vector, first_element);
+	vector_add(vector, second_element);
+
+	int* first_returned_element = vector_get(vector, 0);
+	int* second_returned_element = vector_get(vector, 1);
+
+	int first_comparison = *first_element == *second_returned_element;
+	int second_comparison = *second_element == *second_returned_element;
+
+	char firstMessage[50], secondMessage[50];
+
+	sprintf(firstMessage, "First unequal. Given: %d, Returned: %d", *first_element, *first_returned_element);
+	sprintf(secondMessage, "Second unequal. Given: %d, Returned: %d", *second_element, *second_returned_element);
+
+	vector_free(vector);
+	free(first_element);
+	free(second_element);
+
+	mu_assert(first_comparison, firstMessage);
+	mu_assert(second_comparison, secondMessage);
+}
+
 MU_TEST_SUITE(test_suite) {
 	MU_RUN_TEST(vector_is_instantiable);
 	MU_RUN_TEST(vector_has_size);
@@ -134,6 +165,7 @@ MU_TEST_SUITE(test_suite) {
 	MU_RUN_TEST(can_add_one_element_to_vector);
 	MU_RUN_TEST(can_get_one_element_from_vector);
 	MU_RUN_TEST(size_grows_to_one);
+	MU_RUN_TEST(can_get_more_than_one_element);
 }
 
 int main(void) {

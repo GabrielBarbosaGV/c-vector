@@ -28,9 +28,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 typedef struct Vector Vector;
 
+#define SIMPLE_VECTOR_PROPERTIES \
+size_t size;\
+void* value;
+
 struct Vector {
-	size_t size;
-	void* value;
+	SIMPLE_VECTOR_PROPERTIES
 };
 
 Vector* vector_create();
