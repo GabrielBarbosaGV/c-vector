@@ -27,7 +27,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 MU_TEST(vector_is_instantiable) {
 	// Test is a failure if it won't compile
-	Vector* vector = create_vector();
+	Vector* vector = vector_create();
 
 	vector_free(vector);
 
@@ -36,7 +36,7 @@ MU_TEST(vector_is_instantiable) {
 
 MU_TEST(vector_has_size) {
 	// Test is a failure if it won't compile
-	Vector* vector = create_vector();
+	Vector* vector = vector_create();
 
 	size_t size_of_vector = vector -> size;
 
@@ -45,9 +45,9 @@ MU_TEST(vector_has_size) {
 	mu_check(1);
 }
 
-MU_TEST(create_vector_function_exists) {
+MU_TEST(vector_create_function_exists) {
 	// Test is a failure if it won't compile
-	Vector* vector = create_vector();
+	Vector* vector = vector_create();
 
 	vector_free(vector);
 
@@ -56,7 +56,7 @@ MU_TEST(create_vector_function_exists) {
 
 MU_TEST(destroy_basic_vector_function_exists) {
 	// Test is a failure if it won't compile
-	Vector* vector = create_vector();
+	Vector* vector = vector_create();
 
 	vector_free(vector);
 
@@ -64,7 +64,7 @@ MU_TEST(destroy_basic_vector_function_exists) {
 }
 
 MU_TEST(basic_vector_starts_with_size_zero) {
-	Vector* vector = create_vector();
+	Vector* vector = vector_create();
 
 	size_t vector_size = vector -> size;
 
@@ -75,7 +75,7 @@ MU_TEST(basic_vector_starts_with_size_zero) {
 
 MU_TEST(can_add_one_element_to_vector) {
 	// Test is a failure if it won't compile
-	Vector* vector = create_vector();
+	Vector* vector = vector_create();
 	int* pointer_to_int = malloc(sizeof(int));
 
 	vector_add(vector, pointer_to_int);
@@ -87,30 +87,53 @@ MU_TEST(can_add_one_element_to_vector) {
 }
 
 MU_TEST(can_get_one_element_from_vector) {
-	Vector* vector = create_vector();
+	Vector* vector = vector_create();
 	int* pointer_to_int = malloc(sizeof(int));
 	
 	vector_add(vector, pointer_to_int);
 
 	int* pointer_to_returned_int = vector_get(vector, 0);
 
+	int original_int = *pointer_to_int;
+	int returned_int = *pointer_to_returned_int;
+
 	free(pointer_to_int);
 	vector_free(vector);
 
 	mu_assert(
-		(*pointer_to_int) == (*pointer_to_returned_int),
+		original_int == returned_int,
 		"Value of returned int different from given"
+	);
+}
+
+MU_TEST(size_grows_with_addition) {
+	Vector* vector = vector_create();
+	
+	size_t old_size = vector -> size;
+
+	int* pointer_to_int = malloc(sizeof(int));
+	vector_add(vector, pointer_to_int);
+
+	size_t new_size = vector -> size;
+
+	free(pointer_to_int);
+	vector_free(vector);
+	
+	mu_assert(
+		new_size == old_size + 1,
+		"New size not equals old size plus one."
 	);
 }
 
 MU_TEST_SUITE(test_suite) {
 	MU_RUN_TEST(vector_is_instantiable);
 	MU_RUN_TEST(vector_has_size);
-	MU_RUN_TEST(create_vector_function_exists);
+	MU_RUN_TEST(vector_create_function_exists);
 	MU_RUN_TEST(destroy_basic_vector_function_exists);
 	MU_RUN_TEST(basic_vector_starts_with_size_zero);
 	MU_RUN_TEST(can_add_one_element_to_vector);
 	MU_RUN_TEST(can_get_one_element_from_vector);
+	MU_RUN_TEST(size_grows_with_addition);
 }
 
 int main(void) {
