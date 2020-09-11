@@ -106,7 +106,7 @@ MU_TEST(can_get_one_element_from_vector) {
 	);
 }
 
-MU_TEST(size_grows_with_addition) {
+MU_TEST(size_grows_to_one) {
 	Vector* vector = vector_create();
 	
 	size_t old_size = vector -> size;
@@ -133,7 +133,7 @@ MU_TEST_SUITE(test_suite) {
 	MU_RUN_TEST(basic_vector_starts_with_size_zero);
 	MU_RUN_TEST(can_add_one_element_to_vector);
 	MU_RUN_TEST(can_get_one_element_from_vector);
-	MU_RUN_TEST(size_grows_with_addition);
+	MU_RUN_TEST(size_grows_to_one);
 }
 
 int main(void) {
