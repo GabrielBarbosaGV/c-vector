@@ -25,25 +25,22 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <stdio.h>
 #include "vector.h"
 
-static void add_to_basic_vector(Vector* vector, void* address_of_element_to_add) {
+void vector_add(Vector* vector, void* address_of_element_to_add) {
 	vector -> value = address_of_element_to_add;
 }
 
-static void destroy_basic_vector(Vector* vector) {
+void vector_free(Vector* vector) {
 	free(vector);
 }
 
-static void* basic_vector_get(Vector* vector, size_t index) {
+void* vector_get(Vector* vector, size_t index) {
 	return vector -> value;
 }
 
-Vector* create_basic_vector() {
+Vector* create_vector() {
 	Vector* vector = malloc(sizeof(Vector));
 
 	vector -> size = 0;
-	vector -> add = add_to_basic_vector;
-	vector -> destroy = destroy_basic_vector;
-	vector -> get = basic_vector_get;
 
 	return vector;
 }
