@@ -30,14 +30,15 @@ typedef struct Vector Vector;
 
 struct Vector {
 	size_t size;
-	void (*add)(Vector* vector, void* address_of_element_to_add);
-	void (*destroy)(Vector* vector);
-	void* (*get)(Vector* vector, size_t index);
 	void* value;
 };
 
-Vector* create_basic_vector();
+Vector* create_vector();
 
-void delete_basic_vector(Vector* vector);
+void vector_add(Vector* vector, void* address_of_element_to_add);
+
+void vector_free(Vector* vector);
+
+void* vector_get(Vector* vector, size_t index);
 
 #endif
