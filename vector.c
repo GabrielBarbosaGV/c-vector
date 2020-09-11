@@ -27,6 +27,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 void vector_add(Vector* vector, void* address_of_element_to_add) {
 	vector -> value = address_of_element_to_add;
+	(vector -> size)++;
 }
 
 void vector_free(Vector* vector) {
