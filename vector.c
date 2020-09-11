@@ -37,7 +37,7 @@ void* vector_get(Vector* vector, size_t index) {
 	return vector -> value;
 }
 
-Vector* create_vector() {
+Vector* vector_create() {
 	Vector* vector = malloc(sizeof(Vector));
 
 	vector -> size = 0;

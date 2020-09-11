@@ -33,7 +33,7 @@ struct Vector {
 	void* value;
 };
 
-Vector* create_vector();
+Vector* vector_create();
 
 void vector_add(Vector* vector, void* address_of_element_to_add);
 
