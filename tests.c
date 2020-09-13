@@ -140,7 +140,7 @@ MU_TEST(can_get_more_than_one_element) {
 	int* first_returned_element = vector_get(vector, 0);
 	int* second_returned_element = vector_get(vector, 1);
 
-	int first_comparison = *first_element == *second_returned_element;
+	int first_comparison = *first_element == *first_returned_element;
 	int second_comparison = *second_element == *second_returned_element;
 
 	char firstMessage[50], secondMessage[50];

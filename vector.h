@@ -30,7 +30,8 @@ typedef struct Vector Vector;
 
 #define SIMPLE_VECTOR_PROPERTIES \
 size_t size;\
-void* value;
+size_t internal_size;\
+void** pointers;
 
 struct Vector {
 	SIMPLE_VECTOR_PROPERTIES
