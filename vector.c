@@ -35,6 +35,7 @@ static void vector_expand_and_add_element(Vector* vector, void* address_of_eleme
 static size_t get_new_internal_size(Vector* vector);
 static void vector_add_element_without_expanding(Vector* vector, void* address_of_element_to_add);
 
+
 void vector_add(Vector* vector, void* address_of_element_to_add) {
 	if (vector -> size == vector -> internal_size)
 		vector_expand_and_add_element(vector, address_of_element_to_add);
@@ -45,7 +46,7 @@ static void vector_expand_and_add_element(Vector* vector, void* address_of_eleme
 	size_t new_internal_size = get_new_internal_size(vector);
 	void** new_pointers = calloc(new_internal_size, sizeof(void*));
 
-	memcpy(new_pointers, vector -> pointers, vector -> size);
+	memcpy(new_pointers, vector -> pointers, (vector -> size) * sizeof(void*));
 	vector -> internal_size = new_internal_size;
 
 	free(vector -> pointers);
@@ -55,7 +56,7 @@ static void vector_expand_and_add_element(Vector* vector, void* address_of_eleme
 
 static size_t get_new_internal_size(Vector* vector) {
 	size_t current_size = vector -> internal_size;
-	return current_size ? 2 * current_size : STARTING_VECTOR_INTERNAL_SIZE;
+	return current_size != 0 ? 2 * current_size : STARTING_VECTOR_INTERNAL_SIZE;
 }
 
 static void vector_add_element_without_expanding(Vector* vector, void* address_of_element_to_add) {
@@ -63,6 +64,7 @@ static void vector_add_element_without_expanding(Vector* vector, void* address_o
 }
 
 void vector_free(Vector* vector) {
+	free(vector -> pointers);
 	free(vector);
 }
 
@@ -75,6 +77,7 @@ Vector* vector_create() {
 
 	vector -> size = 0;
 	vector -> internal_size = 0;
+	vector -> pointers = NULL;
 
 	return vector;
 }

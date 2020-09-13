@@ -22,6 +22,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #include <stdlib.h>
+#include <time.h>
 #include "minunit.h"
 #include "vector.h"
 
@@ -116,7 +117,6 @@ MU_TEST(size_grows_to_one) {
 
 	size_t new_size = vector -> size;
 
-	free(pointer_to_int);
 	vector_free(vector);
 	
 	mu_assert(
@@ -156,6 +156,27 @@ MU_TEST(can_get_more_than_one_element) {
 	mu_assert(second_comparison, secondMessage);
 }
 
+#define ADD_MANY_ELEMENTS_AMOUNT 1000
+
+MU_TEST(can_add_many_elements) {
+	// Test is a failure if there is a runtime error
+	Vector* vector = vector_create();
+
+	srand(time(0));
+	size_t i;
+	for (i = 0;i < ADD_MANY_ELEMENTS_AMOUNT;i++) {
+		int* pointer = malloc(sizeof(int));
+		vector_add(vector, pointer);
+	}
+
+	for (i = 0;i < vector -> size;i++)
+		free(vector_get(vector, i));
+	
+	vector_free(vector);
+
+	mu_check(1);
+}
+
 MU_TEST_SUITE(test_suite) {
 	MU_RUN_TEST(vector_is_instantiable);
 	MU_RUN_TEST(vector_has_size);
@@ -166,6 +187,7 @@ MU_TEST_SUITE(test_suite) {
 	MU_RUN_TEST(can_get_one_element_from_vector);
 	MU_RUN_TEST(size_grows_to_one);
 	MU_RUN_TEST(can_get_more_than_one_element);
+	MU_RUN_TEST(can_add_many_elements);
 }
 
 int main(void) {
