@@ -156,7 +156,9 @@ MU_TEST(can_get_more_than_one_element) {
 	mu_assert(second_comparison, secondMessage);
 }
 
+#ifndef ADD_MANY_ELEMENTS_AMOUNT
 #define ADD_MANY_ELEMENTS_AMOUNT 1000
+#endif
 
 MU_TEST(can_add_many_elements) {
 	// Test is a failure if there is a runtime error
