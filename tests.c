@@ -22,6 +22,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #include <stdlib.h>
+#include <time.h>
 #include "minunit.h"
 #include "vector.h"
 
@@ -116,13 +117,66 @@ MU_TEST(size_grows_to_one) {
 
 	size_t new_size = vector -> size;
 
-	free(pointer_to_int);
 	vector_free(vector);
 	
 	mu_assert(
 		new_size == old_size + 1,
 		"New size not equals old size plus one."
 	);
+}
+
+MU_TEST(can_get_more_than_one_element) {
+	Vector* vector = vector_create();
+
+	int* first_element = malloc(sizeof(int));
+	int* second_element = malloc(sizeof(int));
+
+	*first_element = 10;
+	*second_element = 20;
+
+	vector_add(vector, first_element);
+	vector_add(vector, second_element);
+
+	int* first_returned_element = vector_get(vector, 0);
+	int* second_returned_element = vector_get(vector, 1);
+
+	int first_comparison = *first_element == *first_returned_element;
+	int second_comparison = *second_element == *second_returned_element;
+
+	char firstMessage[50], secondMessage[50];
+
+	sprintf(firstMessage, "First unequal. Given: %d, Returned: %d", *first_element, *first_returned_element);
+	sprintf(secondMessage, "Second unequal. Given: %d, Returned: %d", *second_element, *second_returned_element);
+
+	vector_free(vector);
+	free(first_element);
+	free(second_element);
+
+	mu_assert(first_comparison, firstMessage);
+	mu_assert(second_comparison, secondMessage);
+}
+
+#ifndef ADD_MANY_ELEMENTS_AMOUNT
+#define ADD_MANY_ELEMENTS_AMOUNT 1000
+#endif
+
+MU_TEST(can_add_many_elements) {
+	// Test is a failure if there is a runtime error
+	Vector* vector = vector_create();
+
+	srand(time(0));
+	size_t i;
+	for (i = 0;i < ADD_MANY_ELEMENTS_AMOUNT;i++) {
+		int* pointer = malloc(sizeof(int));
+		vector_add(vector, pointer);
+	}
+
+	for (i = 0;i < vector -> size;i++)
+		free(vector_get(vector, i));
+	
+	vector_free(vector);
+
+	mu_check(1);
 }
 
 MU_TEST_SUITE(test_suite) {
@@ -134,6 +188,8 @@ MU_TEST_SUITE(test_suite) {
 	MU_RUN_TEST(can_add_one_element_to_vector);
 	MU_RUN_TEST(can_get_one_element_from_vector);
 	MU_RUN_TEST(size_grows_to_one);
+	MU_RUN_TEST(can_get_more_than_one_element);
+	MU_RUN_TEST(can_add_many_elements);
 }
 
 int main(void) {
