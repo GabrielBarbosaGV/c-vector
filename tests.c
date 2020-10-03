@@ -179,6 +179,68 @@ MU_TEST(can_add_many_elements) {
 	mu_check(1);
 }
 
+MU_TEST(can_remove_element_from_end) {
+	Vector* vector = vector_create();
+	
+	int first, second;
+	first = 1;
+	second = 2;
+
+	vector_add(vector, &first);
+	vector_add(vector, &second);
+
+	size_t vector_size = vector -> size;
+
+	vector_remove(vector, 1);
+
+	char message[100];
+
+	size_t new_size = vector -> size;
+
+	sprintf(message, "Expected 1, but returned size was %d", new_size);
+
+	vector_free(vector);
+
+	mu_assert(
+		(vector_size - 1) == new_size,
+		message
+	);
+}
+
+MU_TEST(can_remove_element_from_middle) {
+	Vector* vector = vector_create();
+	
+	int first, second, third;
+	first = 1;
+	second = 2;
+	third = 3;
+
+	vector_add(vector, &first);
+	vector_add(vector, &second);
+	vector_add(vector, &third);
+
+	vector_remove(vector, 1);
+
+	int new_first, new_second;
+	new_first = *(int*) vector_get(vector, 0);
+	new_second = *(int*) vector_get(vector, 1);
+	
+	vector_free(vector);
+
+	char message[100];
+
+	sprintf(
+		message,
+		"Expected: %d, %d; Got: %d, %d",
+		first,
+		third,
+		new_first,
+		new_second
+	);
+
+	mu_assert(((first == new_first) && (third == new_second)), message);
+}
+
 MU_TEST_SUITE(test_suite) {
 	MU_RUN_TEST(vector_is_instantiable);
 	MU_RUN_TEST(vector_has_size);
@@ -190,6 +252,8 @@ MU_TEST_SUITE(test_suite) {
 	MU_RUN_TEST(size_grows_to_one);
 	MU_RUN_TEST(can_get_more_than_one_element);
 	MU_RUN_TEST(can_add_many_elements);
+	MU_RUN_TEST(can_remove_element_from_end);
+	MU_RUN_TEST(can_remove_element_from_middle);
 }
 
 int main(void) {

@@ -81,3 +81,10 @@ Vector* vector_create() {
 
 	return vector;
 }
+
+void vector_remove(Vector* vector, size_t index) {
+	int i;
+	for (i = index;i < ((vector -> size) - 1);i++)
+		vector -> pointers[i] = vector -> pointers[i + 1];
+	vector -> size--;
+}

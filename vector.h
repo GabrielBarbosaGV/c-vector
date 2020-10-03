@@ -45,4 +45,6 @@ void vector_free(Vector* vector);
 
 void* vector_get(Vector* vector, size_t index);
 
+void vector_remove(Vector* vector, size_t index);
+
 #endif
